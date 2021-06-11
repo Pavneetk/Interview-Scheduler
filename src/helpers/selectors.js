@@ -28,14 +28,19 @@ export function getInterview(state, interview) {
 }
 
 export function getInterviewersForDay(state, day) {
-  let appointments = getAppointmentsForDay(state, day);
+  let dayPicked = day;
+  console.log(state.days)
+  let dayPickedData = state.days.filter(day => day.name === dayPicked);
+  if (dayPickedData[0] === undefined) return [];
+  console.log(dayPickedData)
+  let dayInterviewersId = dayPickedData[0].interviewers;
   let interviewers = [];
 
-  appointments.forEach(appointment => {
-    if((appointment.interview) && (!interviewers.includes(appointment.interview.interviewer))){
-      interviewers.push(state.interviewers[appointment.interview.interviewer.toString()]);
-    } 
+  dayInterviewersId.forEach(Id => {
+    interviewers.push(state.interviewers[Id.toString()]);
   });
+
+
   return interviewers;
 }
 
