@@ -1,4 +1,4 @@
-export default function getAppointmentsForDay(state, day) {
+export function getAppointmentsForDay(state, day) {
   let dayPicked = day;
   let dayPickedData = state.days.filter(day => day.name === dayPicked);
   if (dayPickedData[0] === undefined) return [];
@@ -18,3 +18,12 @@ export default function getAppointmentsForDay(state, day) {
   
   return appointmentsData;
 }
+
+export function getInterview(state, interview) {
+  if(interview === null ) return null;
+  return {
+    student: interview.student,
+    interviewer: state.interviewers[interview.interviewer.toString()]
+  };
+}
+
