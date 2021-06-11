@@ -5,7 +5,7 @@ import "components/Appointment"
 import Appointment from "components/Appointment";
 import axios from 'axios';
 
-
+/*
 const appointments = [
   {
     id: 1,
@@ -63,18 +63,79 @@ const appointments = [
     id: "last",
     time: "7pm",
   }
-];
+];*/
 
 export default function Application(props) {
   
   const [state, setState] = useState({
     day: "Tuesday",
     days: [],
-    // you may put the line below, but will have to remove/comment hardcoded appointments variable
-   // appointments: {}
+    appointments: [
+      {
+        id: 1,
+        time: "12pm",
+      },
+      {
+        id: 2,
+        time: "1pm",
+        interview: {
+          student: "Lydia Miller-Jones",
+          interviewer: {
+            id: 1,
+            name: "Sylvia Palmer",
+            avatar: "https://i.imgur.com/LpaY82x.png",
+          }
+        }
+      },
+      {
+        id: 3,
+        time: "2pm",
+        interview: {
+          student: "Rand Al Thor",
+          interviewer: {
+            id: 1,
+            name: "Sylvia Palmer",
+            avatar: "https://i.imgur.com/LpaY82x.png",
+          }
+        }
+      },
+      {
+        id: 4,
+        time: "3pm",
+        interview: {
+          student: "Bart Simpson",
+          interviewer: {
+            id: 1,
+            name: "Sylvia Palmer",
+            avatar: "https://i.imgur.com/LpaY82x.png",
+          }
+        }
+      },
+      {
+        id: 5,
+        time: "6pm",
+        interview: {
+          student: "Peter Griffin",
+          interviewer: {
+            id: 1,
+            name: "Sylvia Palmer",
+            avatar: "https://i.imgur.com/LpaY82x.png",
+          }
+        }
+      },
+      {
+        id: "last",
+        time: "7pm",
+      }
+    ]
   });
   
-  let mappedAppointments = appointments.map((appointment)=>{
+  const dailyAppointments = [];
+
+
+
+
+  let mappedAppointments = dailyAppointments.map((appointment)=>{
     return <Appointment key={appointment.id} {...appointment}/>
   })
   
@@ -82,10 +143,13 @@ export default function Application(props) {
   const setDays = days => setState(prev => ({ ...prev, days }));
   
   useEffect(() => {
-    axios.get('/api/days')
-    .then(res => {
-      setDays(res.data);
-    })
+   Promise.all([
+    axios.get('/api/days'),
+    axios.get('/api/appointments')
+   ]).then((all) => {
+     console.log(all);
+     setState(prev => ({...prev, days: all[0].data, appointments: all[1].data}));
+   })
     .catch(err => console.log("err:",err));
   }, [])
  
