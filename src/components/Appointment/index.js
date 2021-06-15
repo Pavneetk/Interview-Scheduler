@@ -7,6 +7,7 @@ import useVisualMode from "hooks/useVisualMode"
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error"
 
  
 const EMPTY = "EMPTY";
@@ -16,6 +17,8 @@ const SAVING = "SAVING";
 const CONFIRM = 'CONFIRM';
 const DELETE = 'DELETE';
 const EDIT = 'EDIT';
+const ERROR_SAVE = 'ERROR_SAVE';
+const ERROR_DELETE = 'ERROR_DELETE'
 
 
 export default function Appointment(props) {
@@ -32,7 +35,10 @@ export default function Appointment(props) {
     let response = await props.bookInterview(props.id, interview);
       if(response) {
       transition(SHOW); 
-    };
+      } else if (!response) {
+        transition(ERROR_SAVE, true);
+      }
+      
   }
 
   function confirmDelete() {
@@ -40,22 +46,17 @@ export default function Appointment(props) {
   }
 
   async function delInt() {
-    transition(DELETE);
+    transition(DELETE,true);
     let response = await props.cancelInterview(props.id);
     if(response) {
       transition(EMPTY);
+    } else if (!response) {
+      transition(ERROR_DELETE, true);
     };
   }
 
   async function editInt() {
     transition(EDIT);
-    /*
-    let response = await props.cancelInterview(props.id);
-    if(response) {
-      transition(EMPTY);
-    };
-    */
-   console.log(props.interview);
   }
 
   return (
@@ -68,6 +69,8 @@ export default function Appointment(props) {
     {mode === SAVING && <Status message='Saving'/>}
     {mode === DELETE && <Status message='Deleting'/>}
     {mode === CONFIRM && <Confirm message='Are you sure you would like to Delete?' onConfirm={delInt} onCancel={() => {back()}}/>}
+    {mode === ERROR_SAVE && <Error message='Error Saving Interview' onClose={()=>{back()}}/>}
+    {mode === ERROR_DELETE && <Error message='Error Deleting Interview' onClose={()=>{back()}}/>}
   </article>
   );
 }

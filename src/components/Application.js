@@ -77,21 +77,22 @@ export default function Application(props) {
   
    let bookInterview = async (id, interview) => {
     
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-    setState({
-      ...state,
-      appointments
-    });
+    
 
     let response = await Promise.all([axios.put(`/api/appointments/${id}`, {interview})])
     .then((all)=>{
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+      setState({
+        ...state,
+        appointments
+      });
       return true;
       })
       .catch(function (error) {
@@ -104,20 +105,6 @@ export default function Application(props) {
 
   const cancelInterview = async (id) => {
   
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-    setState({
-      ...state,
-      appointments
-    });
-    
-    
     let response = await axios.put(`/api/appointments/${id}`, {
       "interview": {
         "student": "",
@@ -125,6 +112,18 @@ export default function Application(props) {
       }
     })
     .then((all)=>{
+      const appointment = {
+        ...state.appointments[id],
+        interview: null
+      };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+      setState({
+        ...state,
+        appointments
+      });
       return true;
       })
       .catch(function (error) {
