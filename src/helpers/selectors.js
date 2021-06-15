@@ -20,11 +20,14 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterview(state, interview) {
-  if(interview === null ) return null;
+  if(interview === null || interview.interviewer === null ) {
+    return null;
+  } else {
   return {
     student: interview.student,
     interviewer: state.interviewers[interview.interviewer.toString()]
   };
+}
 }
 
 export function getInterviewersForDay(state, day) {

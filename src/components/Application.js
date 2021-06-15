@@ -100,8 +100,40 @@ export default function Application(props) {
     });
     
     return response;
+  };
 
-  }
+  const cancelInterview = async (id) => {
+    const interview = null;
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState({
+      ...state,
+      appointments
+    });
+    console.log(appointments)
+    
+    let response = await axios.put(`/api/appointments/${id}`, {
+      "interview": {
+        "student": "",
+        "interviewer": null
+      }
+    })
+    .then((all)=>{
+      return true;
+      })
+      .catch(function (error) {
+      console.log(error);
+      return false;
+    });
+    
+    return response;
+  };
 
   const setDay = day => setState({ ...state, day });
  // const setDays = days => setState(prev => ({ ...prev, days }));
@@ -124,7 +156,7 @@ export default function Application(props) {
   let mappedAppointments = dailyAppointments.map((appointment)=>{
     
     const interview = getInterview(state, appointment.interview);
-    return <Appointment key={appointment.id} id={appointment.id} time={appointment.time} interview={interview} interviewers={dailyInterviewers} bookInterview={bookInterview}/>
+    return <Appointment key={appointment.id} id={appointment.id} time={appointment.time} interview={interview} interviewers={dailyInterviewers} bookInterview={bookInterview} cancelInterview={cancelInterview}/>
   })
 
   mappedAppointments.push(<Appointment key="last" time="5pm" />);
