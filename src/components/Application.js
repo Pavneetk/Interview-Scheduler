@@ -103,7 +103,7 @@ export default function Application(props) {
   };
 
   const cancelInterview = async (id) => {
-    const interview = null;
+  
     const appointment = {
       ...state.appointments[id],
       interview: null
@@ -116,7 +116,7 @@ export default function Application(props) {
       ...state,
       appointments
     });
-    console.log(appointments)
+    
     
     let response = await axios.put(`/api/appointments/${id}`, {
       "interview": {
