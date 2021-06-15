@@ -29,10 +29,10 @@ export function getInterview(state, interview) {
 
 export function getInterviewersForDay(state, day) {
   let dayPicked = day;
-  console.log(state.days)
+  
   let dayPickedData = state.days.filter(day => day.name === dayPicked);
   if (dayPickedData[0] === undefined) return [];
-  console.log(dayPickedData)
+  
   let dayInterviewersId = dayPickedData[0].interviewers;
   let interviewers = [];
 

@@ -75,7 +75,33 @@ export default function Application(props) {
     interviewers: {}
   });
   
-  
+   let bookInterview = async (id, interview) => {
+    
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState({
+      ...state,
+      appointments
+    });
+
+    let response = await Promise.all([axios.put(`/api/appointments/${id}`, {interview})])
+    .then((all)=>{
+      return true;
+      })
+      .catch(function (error) {
+      console.log(error);
+      return false;
+    });
+    
+    return response;
+
+  }
 
   const setDay = day => setState({ ...state, day });
  // const setDays = days => setState(prev => ({ ...prev, days }));
@@ -98,7 +124,7 @@ export default function Application(props) {
   let mappedAppointments = dailyAppointments.map((appointment)=>{
     
     const interview = getInterview(state, appointment.interview);
-    return <Appointment key={appointment.id} id={appointment.id} time={appointment.time} interview={interview} interviewers={dailyInterviewers}/>
+    return <Appointment key={appointment.id} id={appointment.id} time={appointment.time} interview={interview} interviewers={dailyInterviewers} bookInterview={bookInterview}/>
   })
 
   mappedAppointments.push(<Appointment key="last" time="5pm" />);
