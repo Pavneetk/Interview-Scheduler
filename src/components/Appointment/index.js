@@ -9,6 +9,7 @@ import Status from "./Status";
 import Confirm from "./Confirm";
 import Error from "./Error"
 
+
  
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
@@ -25,16 +26,19 @@ export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
-  
+
   async function save(name, interviewer) {
     const interview = {
       student: name,
       interviewer
     };
-    transition(SAVING);
+    transition(SAVING,true);
+
     let response = await props.bookInterview(props.id, interview);
-      if(response) {
-      transition(SHOW); 
+      if(response === true) {
+        transition(SHOW);
+      
+      
       } else if (!response) {
         transition(ERROR_SAVE, true);
       }
@@ -50,9 +54,11 @@ export default function Appointment(props) {
     let response = await props.cancelInterview(props.id);
     if(response) {
       transition(EMPTY);
+      
     } else if (!response) {
       transition(ERROR_DELETE, true);
     };
+    
   }
 
   async function editInt() {

@@ -26,12 +26,16 @@ const [state, setState] = useState({
       ...state,
       appointments
     });
+    
+    updateSpots();
+    
     return true;
     })
     .catch(function (error) {
     console.log(error);
     return false;
   });
+  
   
   return response;
 };
@@ -57,6 +61,7 @@ const cancelInterview = async (id) => {
       ...state,
       appointments
     });
+    updateSpots();
     return true;
     })
     .catch(function (error) {
@@ -69,6 +74,40 @@ const cancelInterview = async (id) => {
 
 const setDay = day => setState({ ...state, day });
 // const setDays = days => setState(prev => ({ ...prev, days }));
+
+
+const  updateSpots = async() => {
+  let dayId = 1;
+  let countStart = 1;
+  let spots = 0;
+  switch(state.day) {
+    case "Monday": dayId = 0; break;
+    case "Tuesday": dayId = 1; countStart=6; break;
+    case "Wednesday": dayId = 2; countStart=11; break;
+    case "Thursday": dayId = 3; countStart =16;break;
+    case "Friday": dayId = 4; countStart=21; break;
+    default: dayId = 1; countStart=6;
+  }
+
+  let appointments = await axios.get('/api/appointments');
+  
+    for (let i = countStart; i < (countStart+5); i++) {
+    if(!appointments.data[i.toString()].interview || !appointments.data[i.toString()].interview.interviewer) {
+      spots++
+    }
+  }
+  const dayUpdate = {
+    ...state.days[dayId],
+    spots: spots,
+  } 
+  const days = [...state.days];
+  days[dayId] = dayUpdate;
+  
+  setState(prev => ({ ...prev, days }));
+  
+  
+}
+
 
 useEffect(() => {
  Promise.all([
