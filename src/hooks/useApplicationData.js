@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export default function useApplicationData(initial) {
 const [state, setState] = useState({
-  day: "Tuesday",
+  day: "Monday",
   days: [],
   appointments: [],
   interviewers: {}
@@ -86,7 +86,7 @@ const  updateSpots = async() => {
     case "Wednesday": dayId = 2; countStart=11; break;
     case "Thursday": dayId = 3; countStart =16;break;
     case "Friday": dayId = 4; countStart=21; break;
-    default: dayId = 1; countStart=6;
+    default: dayId = 0; countStart=1;
   }
 
   let appointments = await axios.get('/api/appointments');
