@@ -21,17 +21,24 @@ npm test
 ```sh
 npm run storybook
 ```
-### Loading the app defaults to Monday page load
+## Running Cypress
+
+```sh
+npm run Cypress
+```
+
+
+### Defaults to Monday on page load
 !["defaultpage"](https://github.com/Pavneetk/Interview-Scheduler/blob/master/public/docs/mondayLoad.PNG?raw=true)
-### Pressing the add button brings up the create form
+### Add button starts appointment creation
 !["create"](https://github.com/Pavneetk/Interview-Scheduler/blob/master/public/docs/createForm.PNG?raw=true)
-### Form validated if student name and interviewer are selected
+### Form validation for student name and interviewer selection
 !["validation"](https://github.com/Pavneetk/Interview-Scheduler/blob/master/public/docs/validation.PNG?raw=true)
-### Once appointment is saved or deleted, the spots for the day are updated
+### Spots remaining update after save or delete
 !["spots"](https://github.com/Pavneetk/Interview-Scheduler/blob/master/public/docs/spotUpdate.PNG?raw=true)
 ### If the appointment cannot save or delete, an error is returned
 !["error"](https://github.com/Pavneetk/Interview-Scheduler/blob/master/public/docs/returnError.PNG?raw=true)
-### Before deleted user is prompted for confirmation
+### Before deleting, user is prompted for confirmation
 !["confirmation"](https://github.com/Pavneetk/Interview-Scheduler/blob/master/public/docs/confirmation.PNG?raw=true)
 ### Async action status for saving or deleting
 !["asynstatus"](https://github.com/Pavneetk/Interview-Scheduler/blob/master/public/docs/asyncStatusIndicator.png?raw=true)
