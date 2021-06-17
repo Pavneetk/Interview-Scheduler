@@ -21,3 +21,10 @@ npm test
 ```sh
 npm run storybook
 ```
+!["Description"](https://github.com/Pavneetk/Interview-Scheduler/blob/master/public/docs/mondayLoad.PNG?raw=true)
+!["Description"](url)
+!["Description"](url)
+!["Description"](url)
+!["Description"](url)
+!["Description"](url)
+!["Description"](url)
