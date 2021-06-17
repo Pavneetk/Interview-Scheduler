@@ -1,3 +1,4 @@
+/*mock axios library with mock state data*/ 
 const fixtures = {
   days: [
     {
@@ -64,18 +65,14 @@ export default {
         data: fixtures.days
       });
     }
-
     if (url === "/api/appointments") {
-      /* Resolve appointments data */
       return Promise.resolve({
         status: 200,
         statusText: "OK",
         data: fixtures.appointments
       });
     }
-
     if (url === "/api/interviewers") {
-      /* Resolve interviewers data */
       return Promise.resolve({
         status: 200,
         statusText: "OK",
@@ -85,14 +82,11 @@ export default {
   }
   ),
   put: jest.fn((idURL, interviewOBJ) => {
-    
     let id = idURL.slice(-1);
-    
     let interview = {student: interviewOBJ.interview.student, interviewer: interviewOBJ.interview.interviewer};
+
     fixtures.appointments[id].interview = {...interview};
     
-
     return Promise.resolve({ status: 204, statusText: "No Content" });
-  
   })
 };

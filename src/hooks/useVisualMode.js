@@ -1,13 +1,11 @@
 import { useState } from "react";
 
 export default function useVisualMode(initial) {
-  //const [mode, setMode] = useState(initial);
+ 
   const [history, setHistory] = useState([initial]);
 
   function transition(newMode, replace = false) { 
-    
     setHistory(prev => {
-
       if (replace) {  
         const copy = [...prev];
         copy.splice(-1, 1, newMode);
@@ -15,10 +13,8 @@ export default function useVisualMode(initial) {
       }
 
       return [...prev, newMode];
-      
     });
   }
-
 
   function back() { 
     if (history.length < 2) return;
